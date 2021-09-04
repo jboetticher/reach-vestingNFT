@@ -59,7 +59,8 @@ import * as backend from './build/index.main.mjs';
       { getId: () => {
         const id = stdlib.randomUInt();
         console.log(` Alice makes id #${id}`);
-        return id; }
+        return id; },
+        log: (e) => { console.log(e); }
       },
     ),
     makeOwner(accAlice , ' Alice'),
