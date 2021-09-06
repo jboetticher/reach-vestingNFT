@@ -25,13 +25,13 @@ export const main =
 
     // temporary: pays 5 tokens
     Creator
-      .pay(5)
+      .pay(500000)
       .publish(id);
 
     // Figures out the number of tokens that can be claimed.
     function TokenCountToBeClaimed(lastConsensus, currentConsensus) {
       const modulator = lastConsensus - currentConsensus;
-      return modulator;
+      return modulator * 1000;
     }
 
     var nftData = { owner: Creator, lastTime: lastConsensusTime() };
@@ -47,6 +47,8 @@ export const main =
         
         // Calculates the token count that can be claimed.
         const recentConsensusTime = lastConsensusTime();
+        interact.log(nftData.lastTime);
+        interact.log(recentConsensusTime);
         const claimableTokens = TokenCountToBeClaimed(nftData.lastTime, recentConsensusTime);
         interact.seeData(nftData.owner, claimableTokens);
 
