@@ -4,10 +4,12 @@
 export const main =
   Reach.App(() => {
 
+    setOptions({ verifyArithmetic: true });
+
     const Creator = Participant('Creator', {
       getId: Fun([], UInt)
     });
-
+ 
     const Owner = ParticipantClass('Owner', {
       newOwner: Fun([], Address),
       seeData: Fun([Address, UInt], Null),
@@ -29,8 +31,8 @@ export const main =
       .publish(id);
 
     // Figures out the number of tokens that can be claimed.
-    function TokenCountToBeClaimed(lastConsensus, currentConsensus) {
-      const modulator = lastConsensus - currentConsensus;
+    function TokenCountToBeClaimed(currentConsensus, lastConsensus) {
+      const modulator = currentConsensus - lastConsensus;
       return modulator * 1000;
     }
 
@@ -49,7 +51,7 @@ export const main =
         const recentConsensusTime = lastConsensusTime();
         interact.log(nftData.lastTime);
         interact.log(recentConsensusTime);
-        const claimableTokens = TokenCountToBeClaimed(nftData.lastTime, recentConsensusTime);
+        const claimableTokens = TokenCountToBeClaimed(recentConsensusTime, nftData.lastTime);
         interact.seeData(nftData.owner, claimableTokens);
 
         // Asks for the new owner

@@ -87,10 +87,12 @@ import * as backend from './build/index.main.mjs';
   await Promise.all([
     backend.Creator(
       ctcAlice,
-      { getId: () => {
-        const id = stdlib.randomUInt();
-        console.log(` Alice makes id #${id}`);
-        return id; },
+      { 
+        getId: () => {
+          const id = stdlib.randomUInt();
+          console.log(` Alice makes id #${id}`);
+          return id; 
+        },
         log: (e) => { console.log(e); }
       },
     ),
